@@ -1,0 +1,10 @@
+{
+  "newline-per-chained-call": false,
+  "trailingComma": "none",
+  "semi": true,
+  "singleQuote": true,
+  "printWidth": 160,
+  "tabWidth": 4,
+  "endOfLine": "auto",
+  "useTabs": true
+}

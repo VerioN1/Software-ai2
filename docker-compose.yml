@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  vault:
+    image: vault
+    container_name: vault-dev
+    ports:
+      - "8200:8200"
+    environment:
+      - VAULT_ADDR=http://0.0.0.0:8200
+      - VAULT_API_ADDR=http://0.0.0.0:8200
+      - VAULT_ADDRESS=http://0.0.0.0:8200
+
+    volumes:
+      - './docker/vault/file:/vault/file'
+      - './docker/vault/config:/vault/config'
+    cap_add:
+      - IPC_LOCK
+    entrypoint: vault server -config=/vault/config/vault.json
+
+
+  software-ai:
+    container_name: software-ai
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    ports:
+      - "3443:3000"
+#docker-compose up -d
