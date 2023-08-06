@@ -41,6 +41,8 @@ module.exports = {
 		'no-mixed-spaces-and-tabs': ['off'],
 		'react/jsx-indent': [2, 'tab'],
 		'react/jsx-indent-props': [2, 'tab'],
+		"react/prop-types": "off" ,
+		"react/require-default-props": "off",
 
 		'@typescript-eslint/comma-dangle': ['off'],
 		'comma-dangle': ['off'],
@@ -49,6 +51,7 @@ module.exports = {
 
 		'object-curly-newline': ['off'],
 		'react/react-in-jsx-scope': ['off'],
+		"react/jsx-wrap-multilines": "off",
 		'@typescript-eslint/no-throw-literal': ['off'],
 		'react/jsx-uses-react': ['off'],
 		"@typescript-eslint/naming-convention": "off",

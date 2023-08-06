@@ -5,7 +5,7 @@ import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@re
 import RDGstylesheet from '@inovua/reactdatagrid-enterprise/index.css';
 import { Providers } from '~/providers';
 
-import { getUser } from '~/session.server';
+import { getUser } from '~/services/user.service';
 import stylesheet from '~/tailwind.css';
 
 export const links: LinksFunction = () => [
@@ -27,7 +27,7 @@ const App = () => (
 			<Meta />
 			<Links />
 		</head>
-		<body className="h-full">
+		<body>
 			<Providers>
 				<Outlet />
 				<ScrollRestoration />

@@ -1,52 +1,102 @@
-import { json, redirect } from '@remix-run/node';
-import type { LoaderArgs, V2_MetaFunction } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
-import ReactDataGrid from '@inovua/reactdatagrid-enterprise';
+import { Divider } from '@nextui-org/react';
+import type { LoaderFunction } from '@remix-run/node';
+import { json } from '@remix-run/node';
+import { isRouteErrorResponse, useLoaderData, useRouteError } from '@remix-run/react';
+import { useEffect, useState } from 'react';
+import reactFlowStyles from 'reactflow/dist/style.css';
 import { ClientOnly } from 'remix-utils';
-import { getAllUsers } from '~/services/users.service';
-import { getUserId } from '~/session.server';
+import { ErrorMessage } from '~/components';
+import { FlowGrid } from '~/features';
+import { Loader } from '~/lib';
+import { topologyService, userService } from '~/services';
+import styles from '~/styles/flow.css';
+import { GRID_NODES } from '~/consts';
 
-const columns = [
-	{ name: 'id', header: 'Id', defaultVisible: false, defaultWidth: 80 },
-	{ name: 'firstName', header: 'First Name', defaultFlex: 1 },
-	{ name: 'lastName', header: 'Last Name', defaultFlex: 1 },
-	{ name: 'email', header: 'Email', defaultFlex: 1 },
-	{
-		name: 'roleId',
-		header: 'Role',
-		defaultFlex: 1,
-		type: 'number',
-		render: ({ value }: { value: number }) => (value === 1 ? 'Admin' : 'User')
-	},
-	{ name: 'remark', header: 'Remark', defaultFlex: 1 }
-];
+export const loader: LoaderFunction = async ({ request }) => {
+	const { id: userId } = await userService.requireUser(request);
+	const topology = await topologyService.getTopologyNodes(userId);
 
-const gridStyle = { minHeight: 550 };
+	const newNodes = [
+		{
+			nodeType: GRID_NODES.NODE_SERVER,
+			nodeName: 'node Service'
+		}
+	];
 
-export const loader = async ({ request }: LoaderArgs) => {
-	const userId = await getUserId(request);
-
-	if (!userId) return redirect('/login');
-
-	const users = await getAllUsers();
-	return json({ users });
+	return json({ topology, newNodes });
 };
-export const meta: V2_MetaFunction = () => [{ title: 'Remix Notes' }];
 
-const Index = () => {
-	// const user = useOptionalUser();
-	const data = useLoaderData<typeof loader>();
+let didRender = false;
 
-	return (
-		<div>
-			<h1>Users</h1>
-			<ClientOnly fallback="loading...">
-				{() => (
-					<ReactDataGrid idProperty="id" style={gridStyle} className="global-datagrid-3px-tomato-border" columns={columns} dataSource={data.users} />
-				)}
-			</ClientOnly>
+export default function _index() {
+	const { topology } = useLoaderData<Awaited<ReturnType<typeof loader>>>();
+
+	const [fallBackComponent, setFallbackComponent] = useState(
+		<div className="center-in-context">
+			<Loader overlayBlur={2} />
 		</div>
 	);
-};
 
-export default Index;
+	useEffect(() => {
+		if (didRender) {
+			return;
+		}
+
+		didRender = true;
+		setTimeout(() => setFallbackComponent(<ErrorMessage message="couldn't load grid" />), 3000);
+	}, []);
+
+	return (
+		<>
+			{/* <header className="app-header">React Flow - Remix Example</header> */}
+			<Divider />
+			<ClientOnly fallback={fallBackComponent}>{() => <FlowGrid initialEdges={topology?.edges} initialNodes={topology?.nodes} />}</ClientOnly>
+			{/* <Drawer */}
+			{/*	opened={opened} */}
+			{/*	position="right" */}
+			{/*	onClose={close} */}
+			{/*	size="xs" */}
+			{/*	keepMounted */}
+			{/*	withOverlay={false} */}
+			{/*	closeOnEscape={false} */}
+			{/*	closeOnClickOutside={false} */}
+			{/* > */}
+			{/*	<NewNodesPane newNodes={newNodes} /> */}
+			{/* </Drawer> */}
+		</>
+	);
+}
+
+export const CatchBoundary = () => {
+	const error = useRouteError();
+
+	if (isRouteErrorResponse(error)) {
+		return (
+			<div>
+				<h1>
+					{error.status} {error.statusText}
+				</h1>
+				<p>{error.data}</p>
+			</div>
+		);
+	}
+
+	if (error instanceof Error) {
+		return (
+			<div>
+				<h1>Error</h1>
+				<p>{error.message}</p>
+				<p>The stack trace is:</p>
+				<pre>{error.stack}</pre>
+			</div>
+		);
+	}
+
+	return <h1>Unknown Error</h1>;
+};
+export function links() {
+	return [
+		{ rel: 'stylesheet', href: reactFlowStyles },
+		{ rel: 'stylesheet', href: styles }
+	];
+}

@@ -1,0 +1,87 @@
+.app {
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-header {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding: 0 1rem;
+}
+
+.react-flow {
+    font-size: 12px;
+}
+
+.react-flow__node-custom {
+    border: 1px solid #555;
+    padding: 10px;
+    width: 200px;
+    border-radius: 5px;
+}
+
+.react-flow__node-dbserver {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+    width: 70px;
+    border: 1px solid #555;
+    background-color: #366c6b;
+    border-radius: 50%;
+}
+
+.react-flow__node-backend-server {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+    width: 70px;
+    border: 1px solid #555;
+    background-color: #36576c;
+    border-radius: 50%;
+}
+
+.react-flow__node-client-server {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+    width: 70px;
+    border: 1px solid #555;
+    background-color: #54366c;
+    border-radius: 50%;
+}
+
+.react-flow__attribution {
+    height: 1px;
+    width: 2px;
+}
+
+.reactflow-wrapper {
+    flex-grow: 1;
+    height: 100%;
+}
+
+.dndnode {
+    padding: 1rem;
+    border: 1px solid #1a192b;
+    font-size: 1.4rem;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: grab;
+}
+
+.center-in-context {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}

@@ -1,14 +1,14 @@
-import { Button, Input } from '@nextui-org/react';
-import type { ActionArgs, LoaderArgs, V2_MetaFunction } from '@remix-run/node';
+import { CircularProgress, Link } from '@nextui-org/react';
+import type { ActionFunction, LoaderFunction, V2_MetaFunction } from '@remix-run/node';
 import { json, redirect } from '@remix-run/node';
 import { Form, useActionData, useSearchParams } from '@remix-run/react';
 import { useEffect, useRef } from 'react';
+import { userService } from '~/services';
+import { Button, Checkbox, PasswordInput, TextInput } from '~/lib';
+import { getUserId } from '~/services/user.service';
+import { safeRedirect } from '~/utils';
 
-import { verifyLogin } from '~/models/user.server';
-import { createUserSession, getUserId } from '~/session.server';
-import { safeRedirect, validateEmail } from '~/utils';
-
-export const loader = async ({ request }: LoaderArgs) => {
+export const loader: LoaderFunction = async ({ request }) => {
 	const userId = await getUserId(request);
 
 	if (userId) return redirect('/');
@@ -16,44 +16,50 @@ export const loader = async ({ request }: LoaderArgs) => {
 	return json({});
 };
 
-export const action = async ({ request }: ActionArgs) => {
+interface ActionData {
+	errors?: {
+		email?: string;
+		password?: string;
+	};
+}
+
+export const action: ActionFunction = async ({ request }) => {
 	const formData = await request.formData();
 	const email = formData.get('email');
 	const password = formData.get('password');
-	const redirectTo = safeRedirect(formData.get('redirectTo'), '/');
+	const redirectTo = safeRedirect('/', '/');
 	const remember = formData.get('remember');
 
-	if (!validateEmail(email)) {
-		return json({ errors: { email: 'Email is invalid', password: null } }, { status: 400 });
-	}
-
 	if (typeof password !== 'string' || password.length === 0) {
-		return json({ errors: { email: null, password: 'Password is required' } }, { status: 400 });
+		return json<ActionData>({ errors: { password: 'Password is required' } }, { status: 400 });
 	}
 
-	if (password.length < 8) {
-		return json({ errors: { email: null, password: 'Password is too short' } }, { status: 400 });
+	if (password.length < 2) {
+		return json<ActionData>({ errors: { password: 'Password is too short' } }, { status: 400 });
 	}
 
-	const user = await verifyLogin(email, password);
+	if (!email || typeof email !== 'string') {
+		return json<ActionData>({ errors: { email: 'Email is required' } }, { status: 400 });
+	}
+
+	const user = await userService.verifyLogin(email, password);
 
 	if (!user) {
-		return json({ errors: { email: 'Invalid email or password', password: null } }, { status: 400 });
+		return json<ActionData>({ errors: { email: 'Invalid email or password' } }, { status: 400 });
 	}
 
-	return createUserSession({
-		redirectTo,
-		remember: remember === 'on',
+	// return vault.login(email, password)
+	return userService.createUserSession({
 		request,
-		userId: user.id as unknown as string
+		userId: user.id,
+		remember: remember === 'on',
+		redirectTo
 	});
 };
 
 export const meta: V2_MetaFunction = () => [{ title: 'Login' }];
 
 const LoginPage = () => {
-	const [searchParams] = useSearchParams();
-	const redirectTo = searchParams.get('redirectTo') || '/';
 	const actionData = useActionData<typeof action>();
 	const emailRef = useRef<HTMLInputElement>(null);
 	const passwordRef = useRef<HTMLInputElement>(null);
@@ -67,11 +73,11 @@ const LoginPage = () => {
 	}, [actionData]);
 
 	return (
-		<div className="flex min-h-full flex-col justify-center">
+		<div className="flex min-h-screen flex-col justify-center">
 			<div className="mx-auto w-full max-w-md px-8">
-				<Form method="post" className="space-y-6">
-					<div>
-						<Input
+				<Form method="post" className="space-y-6" noValidate>
+					<div className="mt-1">
+						<TextInput
 							ref={emailRef}
 							id="email"
 							label="Email address"
@@ -82,46 +88,15 @@ const LoginPage = () => {
 							aria-invalid={actionData?.errors?.email ? true : undefined}
 							aria-describedby="email-error"
 						/>
-						{actionData?.errors?.email ? (
-							<div className="pt-1 text-red-700" id="email-error">
-								{actionData.errors.email}
-							</div>
-						) : null}
 					</div>
-
-					<div>
-						<Input
-							id="password"
-							ref={passwordRef}
-							label="Password"
-							name="password"
-							type="password"
-							autoComplete="current-password"
-							aria-invalid={actionData?.errors?.password ? true : undefined}
-							aria-describedby="password-error"
-						/>
-						{actionData?.errors?.password ? (
-							<div className="pt-1 text-red-700" id="password-error">
-								{actionData.errors.password}
-							</div>
-						) : null}
-					</div>
-
-					<input type="hidden" name="redirectTo" value={redirectTo} />
+					<PasswordInput required name="password" label="Password" error={actionData?.errors?.password} />
 					<Button type="submit">Log in</Button>
 					<div className="flex items-center justify-between">
 						<div className="flex items-center">
-							<input
-								id="remember"
-								name="remember"
-								type="checkbox"
-								className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-							/>
-							<label htmlFor="remember" className="ml-2 block text-sm text-gray-900">
-								Remember me
-							</label>
+							<Checkbox name="remember">Remember me</Checkbox>
 						</div>
 					</div>
+					<CircularProgress color="primary" aria-label="Loading..." />
 				</Form>
 			</div>
 		</div>
