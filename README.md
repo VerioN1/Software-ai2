@@ -14,7 +14,7 @@ npx create-remix@latest --template remix-run/blues-stack
 
 - on cloning the repo: npm install, npm run docker, npm run setup, npm run build, npm run dev
 
-- for new prisma client : npm run prisma generate;
+- for new prisma client : prisma generate;
 
 - for minor changes in schema : npx prisma migrate dev --name initial-state, and restart TS service
 

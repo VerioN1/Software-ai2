@@ -1,4 +1,8 @@
 /** @type {import('@remix-run/dev').AppConfig} */
+const {
+  createRoutesFromFolders,
+} = require("@remix-run/v1-route-convention");
+
 module.exports = {
   cacheDirectory: "./node_modules/.cache/remix",
   future: {
@@ -12,4 +16,6 @@ module.exports = {
   postcss: true,
   serverModuleFormat: "cjs",
   tailwind: true,
+
 };
+
