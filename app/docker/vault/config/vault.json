@@ -1,6 +1,0 @@
-{
-  "ui":"true",
-  "listener": {"tcp": {"address" : "0.0.0.0:8200", "tls_disable" : 1}},
-  "kkkeyyss": "Unseal Key 1: tinSFXbyGUMHVWfxMqitx09o0iLTVaLKZdcEmzNHPkaS\nUnseal Key 2: YYV2YMCuUEQXjd5wsgM2TQMGak+HGhDbP8YMKvSS2bJ4\nUnseal Key 3: YE9Drq2Uc3q7G3zx7L5TVpQhANkylmuNWAt3UnhmSMx1\nUnseal Key 4: /NwfRe+QSrrNm2Z8gh5DytxL0g532SzL1EFUVKmorRwD\nUnseal Key 5: PbA/AhOJsweOUXm/dxTVPoUCwluyecHRme2PaEj1KMsI\n\nInitial Root Token: hvs.BFzYQ0yKQ2gOP6dCynIEsv9r",
-  "storage": {"file" : {"path": "/vault/file"}}
-}
