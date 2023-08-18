@@ -4,7 +4,7 @@ import React from 'react';
 import type { NodeProps } from 'reactflow';
 import { Handle, Position } from 'reactflow';
 import { RightClickMenu } from '~/components';
-import { DASHBOARD_ROUTES } from '~/consts';
+import { SIDEBAR_ROUTES } from '~/consts';
 
 interface Props {
 	children: ReactNode;
@@ -18,7 +18,7 @@ const NodeTemplate = ({ linkProps = {}, children, nodeProps }: Props) => (
 		<Link
 			className="h-full w-full flex items-center justify-center"
 			style={{ color: 'inherit' }}
-			to={`/${DASHBOARD_ROUTES.GRAPHS}/${nodeProps.data.label}`}
+			to={`/${SIDEBAR_ROUTES.graphs}/${nodeProps.data.label}`}
 			{...linkProps}
 		>
 			<RightClickMenu nodeId={nodeProps?.id}>{children}</RightClickMenu>

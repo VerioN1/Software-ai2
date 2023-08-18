@@ -7,12 +7,14 @@ import { Providers } from '~/providers';
 
 import { getUser } from '~/services/user.service';
 import stylesheet from '~/tailwind.css';
+import flowcss from '~/styles/flow.css';
 
 export const links: LinksFunction = () => [
 	...(cssBundleHref
 		? [{ rel: 'stylesheet', href: cssBundleHref }]
 		: [
 				{ rel: 'stylesheet', href: stylesheet },
+				{ rel: 'stylesheet', href: flowcss },
 				{ rel: 'stylesheet', href: RDGstylesheet }
 		  ])
 ];

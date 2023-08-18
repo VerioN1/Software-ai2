@@ -49,7 +49,7 @@ export default function _index() {
 	return (
 		<>
 			{/* <header className="app-header">React Flow - Remix Example</header> */}
-			<Divider />
+
 			<ClientOnly fallback={fallBackComponent}>{() => <FlowGrid initialEdges={topology?.edges} initialNodes={topology?.nodes} />}</ClientOnly>
 			{/* <Drawer */}
 			{/*	opened={opened} */}
@@ -74,7 +74,8 @@ export const CatchBoundary = () => {
 		return (
 			<div>
 				<h1>
-					{error.status} {error.statusText}
+					{error.status}
+					{error.statusText}
 				</h1>
 				<p>{error.data}</p>
 			</div>
@@ -94,6 +95,7 @@ export const CatchBoundary = () => {
 
 	return <h1>Unknown Error</h1>;
 };
+
 export function links() {
 	return [
 		{ rel: 'stylesheet', href: reactFlowStyles },

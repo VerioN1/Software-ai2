@@ -1,7 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz@6..12&display=swap');
+
+@font-face {
+    font-family: 'Nunito Sans', sans-serif;
+    font-style: normal;
+    font-display: swap;
+}
+
 .app {
     height: 90vh;
     display: flex;
     flex-direction: column;
+}
+
+* {
+    font-family:  'Nunito Sans', sans-serif;
+    box-sizing: border-box;
 }
 
 .app-header {
