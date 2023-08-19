@@ -38,7 +38,7 @@ const _Layout = () => (
 					const Icon = SIDEBAR_LINKS_ICONS[route];
 					return (
 						<SideBarLink key={route} to={`/${route}`} className="font-bold">
-							<Icon size={42} color="hsl(var(--nextui-secondary-500))" />
+							<Icon size={40} color="hsl(var(--nextui-secondary-500))" />
 						</SideBarLink>
 					);
 				})}
