@@ -1,4 +1,4 @@
-import { Divider } from '@nextui-org/react';
+import { Divider, useDisclosure } from '@nextui-org/react';
 import type { LoaderFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { isRouteErrorResponse, useLoaderData, useRouteError } from '@remix-run/react';
@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import reactFlowStyles from 'reactflow/dist/style.css';
 import { ClientOnly } from 'remix-utils';
 import { ErrorMessage } from '~/components';
+import Drawer from '~/components/Drawer/Drawer';
 import { FlowGrid } from '~/features';
 import { Loader } from '~/lib';
 import { topologyService, userService } from '~/services';
@@ -30,6 +31,7 @@ let didRender = false;
 
 export default function _index() {
 	const { topology } = useLoaderData<Awaited<ReturnType<typeof loader>>>();
+	const { isOpen, onOpen, onClose } = useDisclosure();
 
 	const [fallBackComponent, setFallbackComponent] = useState(
 		<div className="center-in-context">
@@ -49,20 +51,16 @@ export default function _index() {
 	return (
 		<>
 			{/* <header className="app-header">React Flow - Remix Example</header> */}
-
-			<ClientOnly fallback={fallBackComponent}>{() => <FlowGrid initialEdges={topology?.edges} initialNodes={topology?.nodes} />}</ClientOnly>
-			{/* <Drawer */}
-			{/*	opened={opened} */}
-			{/*	position="right" */}
-			{/*	onClose={close} */}
-			{/*	size="xs" */}
-			{/*	keepMounted */}
-			{/*	withOverlay={false} */}
-			{/*	closeOnEscape={false} */}
-			{/*	closeOnClickOutside={false} */}
-			{/* > */}
-			{/*	<NewNodesPane newNodes={newNodes} /> */}
-			{/* </Drawer> */}
+			<ClientOnly fallback={fallBackComponent}>
+				{() => <FlowGrid openDrawer={onOpen} initialEdges={topology?.edges} initialNodes={topology?.nodes} />}
+			</ClientOnly>
+			<Drawer isOpen={isOpen} onClose={onClose}>
+				<div className="drawer-content">
+					<h1>Drawer Content</h1>
+					<Divider />
+					<p>Drawer content goes here</p>
+				</div>
+			</Drawer>
 		</>
 	);
 }

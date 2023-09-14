@@ -10,7 +10,7 @@ export default {
 	},
 	plugins: [
 		nextui({
-			defaultTheme: 'dark',
+			defaultTheme: 'light',
 			themes: {
 				dark: {
 					colors: {

@@ -29,7 +29,7 @@ const App = () => (
 			<Meta />
 			<Links />
 		</head>
-		<body>
+		<body className="light">
 			<Providers>
 				<Outlet />
 				<ScrollRestoration />

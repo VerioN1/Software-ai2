@@ -10,7 +10,7 @@ interface Props {
 }
 
 const RenderChartsClient = ({ graphsData }: Props) => {
-	const colorScheme = 'dark';
+	const colorScheme = 'light';
 	const isDark = colorScheme === 'dark';
 
 	return (

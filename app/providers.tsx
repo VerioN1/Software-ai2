@@ -6,8 +6,6 @@ import { NextUIProvider } from '@nextui-org/react';
 
 export const Providers = ({ children }: { children: React.ReactNode }) => (
 	<NextUIProvider>
-		<NextThemesProvider attribute="class" defaultTheme="dark">
-			{children}
-		</NextThemesProvider>
+		<NextThemesProvider attribute="class">{children}</NextThemesProvider>
 	</NextUIProvider>
 );
