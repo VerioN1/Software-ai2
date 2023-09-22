@@ -9,9 +9,10 @@ interface Props {
 }
 
 const SideBarLink = ({ to, children, prefetch = 'none', className }: Props) => {
-	const classNames = ({ isActive }: { isActive: boolean }) => {
-		const hoverBorder = isActive ? 'color-secondary-500' : 'transparent';
-		return `flex justify-center items-center border-solid border-transparent border-l-4 hover:border-current hover:border-secondary-500 ${hoverBorder} ${className}`;
+	const classNames = ({ isActive, isPending }: { isActive: boolean; isPending: boolean }) => {
+		const activeStyle = isActive ? '!text-zinc-100 bg-primary shadow-md shadow-secondary-300' : '';
+		const pendingStyle = isPending ? 'text-zinc-100 bg-primary animate-pulse' : '';
+		return `flex place-items-center p-2 text-zinc-400 border-solid rounded-lg border-transparent hover:bg-primary hover:!text-zinc-100 ${pendingStyle} ${activeStyle} ${className}`;
 	};
 
 	return (

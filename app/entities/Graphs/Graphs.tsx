@@ -9,27 +9,18 @@ interface Props {
 	graphsData: null | GraphMetadata[];
 }
 
-const RenderChartsClient = ({ graphsData }: Props) => {
-	const colorScheme = 'light';
-	const isDark = colorScheme === 'dark';
-
-	return (
-		<ClientOnly fallback="">
-			{() => (
-				<>
-					{(graphsData || graphsMock.defaultGraphs(echarts)).map(({ title, options, classNames, _id }) => (
-						<div
-							key={_id}
-							// bg={isDark ? 'dark.5' : 'gray.2'}
-							className={`drop-shadow-[0_45px_45px_rgba(0,0,0,0.45)] rounded-2xl ${classNames}`}
-						>
-							<ReactEcharts option={options} />
-						</div>
-					))}
-				</>
-			)}
-		</ClientOnly>
-	);
-};
+const RenderChartsClient = ({ graphsData }: Props) => (
+	<ClientOnly fallback="">
+		{() => (
+			<div className="grid gap-4 grid-cols-4">
+				{(graphsData || graphsMock.defaultGraphs(echarts)).map(({ title, options, classNames, _id }) => (
+					<div key={_id} className={`drop-shadow-[0_8px_5px_rgba(0,0,0,0.15)] p-3 ${classNames} bg-gray-200 rounded-2xl`}>
+						<ReactEcharts option={options} />
+					</div>
+				))}
+			</div>
+		)}
+	</ClientOnly>
+);
 
 export default RenderChartsClient;

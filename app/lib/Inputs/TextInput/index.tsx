@@ -1,5 +1,5 @@
-import { Input, InputProps } from '@nextui-org/react';
+import { Input } from '@nextui-org/react';
 
-const TextInput = ({ ...props }: InputProps) => <Input variant="underlined" color="primary" {...props} />;
+const TextInput = Input;
 
 export default TextInput;

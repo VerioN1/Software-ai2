@@ -2,7 +2,9 @@ import { cssBundleHref } from '@remix-run/css-bundle';
 import type { LinksFunction, LoaderArgs } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
-import RDGstylesheet from '@inovua/reactdatagrid-enterprise/index.css';
+import RCSS from 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
+import GCSS from 'ag-grid-community/styles/ag-theme-alpine.css';
+import useDarkMode from 'use-dark-mode';
 import { Providers } from '~/providers';
 
 import { getUser } from '~/services/user.service';
@@ -15,29 +17,34 @@ export const links: LinksFunction = () => [
 		: [
 				{ rel: 'stylesheet', href: stylesheet },
 				{ rel: 'stylesheet', href: flowcss },
-				{ rel: 'stylesheet', href: RDGstylesheet }
+				{ rel: 'stylesheet', href: RCSS },
+				{ rel: 'stylesheet', href: GCSS }
 		  ])
 ];
 
 export const loader = async ({ request }: LoaderArgs) => json({ user: await getUser(request) });
 
-const App = () => (
-	<html lang="en" className="h-full">
-		<head title="STMS-V2">
-			<meta charSet="utf-8" />
-			<meta name="viewport" content="width=device-width,initial-scale=1" />
-			<Meta />
-			<Links />
-		</head>
-		<body className="light">
-			<Providers>
-				<Outlet />
-				<ScrollRestoration />
-				<Scripts />
-				<LiveReload />
-			</Providers>
-		</body>
-	</html>
-);
+const App = () => {
+	const darkMode = useDarkMode(false);
+
+	return (
+		<html lang="en" className="h-full">
+			<head title="STMS-V2">
+				<meta charSet="utf-8" />
+				<meta name="viewport" content="width=device-width,initial-scale=1" />
+				<Meta />
+				<Links />
+			</head>
+			<body className={`${darkMode.value ? '' : ''} text-foreground bg-background`}>
+				<Providers>
+					<Outlet />
+					<ScrollRestoration />
+					<Scripts />
+					<LiveReload />
+				</Providers>
+			</body>
+		</html>
+	);
+};
 
 export default App;

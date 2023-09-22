@@ -1,3 +1,3 @@
 export * from './grid/gridConsts';
 export * from './navigation/routesConsts';
-export * from './common';
+export * from './newMonitoringCatalog';

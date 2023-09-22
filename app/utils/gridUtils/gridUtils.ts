@@ -3,8 +3,7 @@ import type { CalculateGridClickCoordinatesParams, GridParams } from '~/utils/gr
 import { GRID_EVENTS_REQUESTS_TYPES, GRID_EVENTS_RESPONSE_TYPES } from '~/consts';
 import { flowCoordinatesSubject } from '~/features/FlowGrid/model';
 
-const accessor =
-	(func: (...a: any[]) => void) =>
+const accessor =	(func: (...a: any[]) => void) =>
 	(...params: any[]) =>
 	(injection: any) =>
 		func(injection, ...params);
@@ -23,10 +22,6 @@ const calculateGridClickCoordinates = (
 			y: event.clientY - reactFlowBounds.top
 		});
 
-		// const position = {
-		// 	x: event.clientX,
-		// 	y: event.clientY
-		// }
 		flowCoordinatesSubject.next({
 			eventType: GRID_EVENTS_RESPONSE_TYPES.CALCULATE_COORDINATES_RES,
 			data: { position, currentNodeId }
@@ -34,7 +29,12 @@ const calculateGridClickCoordinates = (
 	}
 };
 
-const openRightClickMenu = ({ setXyPosition, setContext }: { setXyPosition: (params: any) => void; setContext: any }, { position }: any) => {
+const openRightClickMenu = ({ setXyPosition, setContext }: {
+		setXyPosition: (params: any) => void;
+		setContext: any;
+	},
+	{ position }: any
+) => {
 	setContext(true);
 	setXyPosition({ ...position });
 };

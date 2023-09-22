@@ -1,16 +1,15 @@
-import { Divider, useDisclosure } from '@nextui-org/react';
+import { Divider } from '@nextui-org/react';
 import type { LoaderFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { isRouteErrorResponse, useLoaderData, useRouteError } from '@remix-run/react';
 import { useEffect, useState } from 'react';
 import reactFlowStyles from 'reactflow/dist/style.css';
 import { ClientOnly } from 'remix-utils';
-import { ErrorMessage } from '~/components';
-import Drawer from '~/components/Drawer/Drawer';
+import { ErrorMessage, Drawer } from '~/components';
 import { FlowGrid } from '~/features';
+import { useDisclosure } from '~/hooks';
 import { Loader } from '~/lib';
 import { topologyService, userService } from '~/services';
-import styles from '~/styles/flow.css';
 import { GRID_NODES } from '~/consts';
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -35,7 +34,7 @@ export default function _index() {
 
 	const [fallBackComponent, setFallbackComponent] = useState(
 		<div className="center-in-context">
-			<Loader overlayBlur={2} />
+			<Loader />
 		</div>
 	);
 
@@ -95,8 +94,5 @@ export const CatchBoundary = () => {
 };
 
 export function links() {
-	return [
-		{ rel: 'stylesheet', href: reactFlowStyles },
-		{ rel: 'stylesheet', href: styles }
-	];
+	return [{ rel: 'stylesheet', href: reactFlowStyles }];
 }

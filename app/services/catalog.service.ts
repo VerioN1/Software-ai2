@@ -27,7 +27,7 @@ const getCatalogForm = async (id: string): Promise<CatalogItem> => {
 			params: {
 				id
 			},
-			timeout: 19_000
+			timeout: 1_000
 		});
 
 		return response.data[0];

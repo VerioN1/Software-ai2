@@ -4,6 +4,7 @@ export { Checkbox } from './Checkbox/Checkbox';
 export { default as PasswordInput } from './Inputs/PasswordInput/PasswordInput';
 export { Divider } from './Divider';
 export { Loader } from './Loader';
+export * from './Chip/Chip';
 export * from './Card/Card';
 export { default as Text } from './Text';
 export * from './Tooltip';

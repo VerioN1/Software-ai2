@@ -1,10 +1,17 @@
 {
-  "newline-per-chained-call": false,
-  "trailingComma": "none",
   "semi": true,
   "singleQuote": true,
-  "printWidth": 160,
+  "quoteProps": "consistent",
+  "trailingComma": "none",
+  "requirePragma": false,
+  "proseWrap": "always",
+  "printWidth": 290,
   "tabWidth": 4,
-  "endOfLine": "auto",
+  "arrowParens": "avoid",
+  "bracketSameLine": true,
+  "bracketSpacing": false,
+  "embeddedLanguageFormatting": "auto",
+  "endOfLine": "lf",
+  "htmlWhitespaceSensitivity": "css",
   "useTabs": true
 }

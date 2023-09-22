@@ -47,7 +47,7 @@ module.exports = {
 		'@typescript-eslint/comma-dangle': ['off'],
 		'comma-dangle': ['off'],
 		'import/prefer-default-export': 'off',
-		'max-len': ['error', { 'code': 160, 'ignoreUrls': true }],
+		'max-len': ['error', { 'code': 260, 'ignoreUrls': true }],
 
 		'object-curly-newline': ['off'],
 		'react/react-in-jsx-scope': ['off'],
@@ -65,17 +65,17 @@ module.exports = {
 			{ "blankLine": "always", "prev": "*", "next": "try" },
 			{ "blankLine": "always", "prev": "*", "next": "switch" },
 		],
-		'prettier/prettier': ['error', {
-			'newline-per-chained-call': false,
-			'trailingComma': 'none',
-			'semi': true,
-			'singleQuote': true,
-			'printWidth': 160,
-			'tabWidth': 4,
-			"endOfLine": "auto",
-			'useTabs': true,
-			'prettier.tslintIntegration': true
-		}],
+		// 'prettier/prettier': ['error', {
+		// 	'newline-per-chained-call': false,
+		// 	'trailingComma': 'none',
+		// 	'semi': true,
+		// 	'singleQuote': true,
+		// 	'printWidth': 160,
+		// 	'tabWidth': 4,
+		// 	"endOfLine": "auto",
+		// 	'useTabs': true,
+		// 	'prettier.tslintIntegration': true
+		// }],
 		"newline-per-chained-call": ["off"],
 		'react/jsx-props-no-spreading': ['warn'],
 		"react/function-component-definition": [

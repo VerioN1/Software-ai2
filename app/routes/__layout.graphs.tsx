@@ -2,7 +2,7 @@ import { json, LoaderFunction } from '@remix-run/node';
 import React, { lazy, Suspense } from 'react';
 import { useLoaderData, useParams } from '@remix-run/react';
 import { ClientOnly } from 'remix-utils';
-import { Text } from '~/lib';
+import { Text, TextInput } from '~/lib';
 
 const LazyLoadCharts = lazy(() => import('../entities/Graphs/Graphs'));
 
@@ -13,7 +13,7 @@ const __layoutGraphsLevel = () => {
 
 	const { level } = useParams();
 	return (
-		<div>
+		<>
 			<Text>
 				{!level ? 'System' : level}
 				Visualized data
@@ -25,7 +25,7 @@ const __layoutGraphsLevel = () => {
 					</Suspense>
 				)}
 			</ClientOnly>
-		</div>
+		</>
 	);
 };
 

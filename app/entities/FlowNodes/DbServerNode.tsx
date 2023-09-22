@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import React from 'react';
 import type { NodeProps } from 'reactflow';
 import { Text, Tooltip } from '~/lib';
-import { MongoDB } from '~/styles';
+import { MongoDBIcon } from '~/styles';
 import NodeTemplate from '~/entities/FlowNodes/NodeTemplate';
 
 const DbServerNode: FC<NodeProps> = ({ data, ...rest }) => (
@@ -19,7 +19,7 @@ const DbServerNode: FC<NodeProps> = ({ data, ...rest }) => (
 			}
 		>
 			<div>
-				<MongoDB size={34} />
+				<MongoDBIcon size={34} />
 			</div>
 		</Tooltip>
 	</NodeTemplate>

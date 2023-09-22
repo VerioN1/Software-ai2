@@ -1,10 +1,12 @@
-import { Link, useFetcher } from '@remix-run/react';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useFetcher, Link } from '@remix-run/react';
+import React, { DragEventHandler, useCallback, useEffect, useRef, useState } from 'react';
 import type { Connection, Edge, Node, ReactFlowInstance, ReactFlowRefType } from 'reactflow';
 import ReactFlow, { addEdge, Background, Controls, MiniMap, ReactFlowProvider, useEdgesState, useNodesState } from 'reactflow';
+import { ButtonGroup } from '@nextui-org/react';
 import { Button } from '~/lib';
 import { PencilIcon, Plus } from '~/styles';
 import { NOOP } from '~/utils';
+import { CalculateGridClickCoordinatesParams } from '~/utils/gridUtils/types';
 import { flowCoordinatesSubject } from './model';
 import { GRID_ENTITY_TYPES, GRID_NODE_TYPES, GRID_EVENTS_REQUESTS_TYPES, GRID_NODES } from '~/consts';
 import { useUpdateGrid } from '../../hooks';
@@ -53,7 +55,7 @@ const FlowGrid = ({ initialNodes = gridMock.defaultNodes, initialEdges = gridMoc
 			subscriptionRef.current.unsubscribe();
 		}
 
-		subscriptionRef.current = flowCoordinatesSubject.subscribe(({ eventType, params }: { eventType: GRID_EVENTS_REQUESTS_TYPES; params: any }) => {
+		subscriptionRef.current = flowCoordinatesSubject.subscribe(({ eventType, params }: { eventType: GRID_EVENTS_REQUESTS_TYPES; params: CalculateGridClickCoordinatesParams }) => {
 			if (!isFalsy(reactFlowWrapper.current) && !isFalsy(reactFlowInstance) && eventType in GRID_EVENTS_REQUESTS_TYPES) {
 				gridEventsRequestsTypes[eventType](params)({
 					reactFlowWrapper: reactFlowWrapper.current,
@@ -65,14 +67,14 @@ const FlowGrid = ({ initialNodes = gridMock.defaultNodes, initialEdges = gridMoc
 
 	const onConnect = useCallback((params: Connection | Edge) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
 
-	const onDragOver = useCallback((event: any) => {
+	const onDragOver: DragEventHandler = useCallback((event) => {
 		event.preventDefault();
 		// eslint-disable-next-line no-param-reassign
 		event.dataTransfer.dropEffect = 'move';
 	}, []);
 
-	const onDrop = useCallback(
-		(event: any) => {
+	const onDrop: DragEventHandler = useCallback(
+		(event) => {
 			event.preventDefault();
 
 			if (reactFlowWrapper?.current && reactFlowInstance !== null) {
@@ -116,9 +118,8 @@ const FlowGrid = ({ initialNodes = gridMock.defaultNodes, initialEdges = gridMoc
 					onEdgesChange={onEdgesChange}
 					onConnect={onConnect}
 					nodeTypes={GRID_NODE_TYPES}
-					onNodeContextMenu={(event, node: any) => {
+					onNodeContextMenu={(event, node: Node) => {
 						event.preventDefault();
-						console.log('position', event.clientX, event.clientY);
 						flowCoordinatesSubject.next({
 							eventType: GRID_EVENTS_REQUESTS_TYPES.CALCULATE_COORDINATES_REQ,
 							params: { position: node.position, currentNodeId: node.id, event }
@@ -131,22 +132,15 @@ const FlowGrid = ({ initialNodes = gridMock.defaultNodes, initialEdges = gridMoc
 					onDragOver={onDragOver}
 					fitView
 				>
-					<Button
-						style={{ right: '1rem', zIndex: '5', top: '10px', position: 'absolute', height: '40px' }}
-						compact
-						component={Link}
-						to="/create-monitoring"
-					>
-						<Plus size={22} />
-					</Button>
-					<Button
-						style={{ right: '4.5rem', zIndex: '5', top: '10px', position: 'absolute', height: '40px' }}
-						compact
-						component={Link}
-						onPress={toggleEditMode}
-					>
-						<PencilIcon size={22} />
-					</Button>
+					<ButtonGroup>
+						{/* @ts-ignore */}
+						<Button as={Link} style={{ right: '1rem', zIndex: '5', top: '10px', position: 'absolute', height: '40px' }} to="/create-monitoring">
+							<Plus size={22} />
+						</Button>
+						<Button style={{ right: '4.5rem', zIndex: '5', top: '10px', position: 'absolute', height: '40px' }} onPress={toggleEditMode}>
+							<PencilIcon size={22} />
+						</Button>
+					</ButtonGroup>
 					<Background />
 					<MiniMap />
 					<Controls />
