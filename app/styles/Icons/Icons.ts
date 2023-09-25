@@ -11,7 +11,7 @@ export {
 	SiReact as ReactLogo,
 	SiMicrosoftazure as AzureCloudIcon
 } from 'react-icons/si';
-export { FaNodeJs as NodeJS, FaAws as AWSIcon, FaScroll } from 'react-icons/fa';
+export { FaNodeJs as NodeJSIcon, FaAws as AWSIcon, FaScroll } from 'react-icons/fa';
 export { BsMoonStars as MoonStars, BsSun as Sun } from 'react-icons/bs';
 export {
 	AiOutlinePlus as Plus,

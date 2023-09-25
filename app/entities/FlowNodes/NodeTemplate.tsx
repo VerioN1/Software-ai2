@@ -18,7 +18,7 @@ const NodeTemplate = ({ linkProps = {}, children, nodeProps }: Props) => (
 		<Link
 			className="h-full w-full flex items-center justify-center"
 			style={{ color: 'inherit' }}
-			to={`/${SIDEBAR_ROUTES.graphs}/${nodeProps.data.label}`}
+			to={`/${SIDEBAR_ROUTES.graphs}/${nodeProps.type}`}
 			{...linkProps}
 		>
 			<RightClickMenu nodeId={nodeProps?.id}>{children}</RightClickMenu>

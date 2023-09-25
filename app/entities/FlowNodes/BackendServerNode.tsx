@@ -2,13 +2,13 @@ import type { FC } from 'react';
 import React from 'react';
 import type { NodeProps } from 'reactflow';
 import { Text, Tooltip } from '~/lib';
-import { NodeJS } from '~/styles';
+import { NodeJSIcon } from '~/styles';
 import NodeTemplate from './NodeTemplate';
 
 const BackendServerNode: FC<NodeProps> = ({ data, ...rest }) => (
 	<NodeTemplate nodeProps={{ data, ...rest }}>
 		<Tooltip
-			label={
+			content={
 				<div className="flex justify-center items-center flex-col">
 					<div>
 						<strong>{data.label}</strong>
@@ -19,7 +19,7 @@ const BackendServerNode: FC<NodeProps> = ({ data, ...rest }) => (
 			}
 		>
 			<div>
-				<NodeJS size={34} />
+				<NodeJSIcon size={34} />
 			</div>
 		</Tooltip>
 	</NodeTemplate>

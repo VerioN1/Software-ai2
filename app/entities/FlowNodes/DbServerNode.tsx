@@ -8,7 +8,7 @@ import NodeTemplate from '~/entities/FlowNodes/NodeTemplate';
 const DbServerNode: FC<NodeProps> = ({ data, ...rest }) => (
 	<NodeTemplate nodeProps={{ data, ...rest }}>
 		<Tooltip
-			label={
+			content={
 				<div className="flex justify-center items-center flex-col">
 					<div>
 						<strong>{data.label}</strong>

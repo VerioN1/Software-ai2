@@ -1,6 +1,6 @@
 import { ArrowLeftIcon } from '@nextui-org/shared-icons';
 import { json } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { useLoaderData, Link } from '@remix-run/react';
 import React from 'react';
 import MonitoringSection from '~/components/MonitoringSection/MonitoringSection';
 import { Button, TextInput } from '~/lib';
@@ -14,7 +14,8 @@ const CreateMonitoring = () => {
 	return (
 		<main className="flex flex-col p-8">
 			<div className="w-full">
-				<Button>
+				{/* @ts-ignore */}
+				<Button as={Link} color="primary" to="/">
 					<ArrowLeftIcon />
 				</Button>
 			</div>
@@ -22,9 +23,9 @@ const CreateMonitoring = () => {
 				<h1 className="text-3xl font-bold">Create Monitoring</h1>
 				<TextInput label="Search Field" className="w-[22rem]" />
 				{
-						Object.entries(data).map(([key, field]) => (
-							<MonitoringSection sectionTitle={field.title} applications={field.items} key={key} />
-						))
+					Object.entries(data).map(([key, field]) => (
+						<MonitoringSection sectionTitle={field.title} applications={field.items} key={key} />
+					))
 				}
 			</div>
 		</main>

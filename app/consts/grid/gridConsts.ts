@@ -5,7 +5,7 @@ import ClientServerNode from '~/entities/FlowNodes/ClientServerNode';
 export enum GRID_NODES {
 	NODE_SERVER = 'backend-server',
 	NODE_CLIENT = 'client-server',
-	DB_SERVER = 'db-server'
+	DB_SERVER = 'database'
 }
 
 export const GRID_NODE_TYPES = {

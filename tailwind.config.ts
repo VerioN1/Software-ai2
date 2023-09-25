@@ -20,7 +20,7 @@ export default {
 				},
 				light: {
 					colors: {
-						background: '#d5c9ea',
+						background: '#e9e4f5',
 						primary: {
 							DEFAULT: '#5932EA',
 							foreground: '#ffffff'
