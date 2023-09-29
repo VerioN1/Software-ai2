@@ -2,19 +2,19 @@ export type FieldTypes = 'Select' | 'TextInput' | 'Textarea';
 
 export type CatalogDynamicField = {
 	type: FieldTypes;
-	tooltip: string;
-	label: string;
+	tooltip?: string;
+	label?: string;
 	name: string;
-	required: boolean;
-	placeholder: string;
-	regex: string;
+	required?: boolean;
+	placeholder?: string;
+	regex?: string;
 };
 
-export type DynamicForm = {
+export type IDynamicForm = {
 	fields: CatalogDynamicField[]
 };
 
-export type CatalogRule = DynamicForm & {
+export type CatalogRule = IDynamicForm & {
 	metadata: {
 		alertName: string;
 		tooltip: string;
@@ -22,7 +22,7 @@ export type CatalogRule = DynamicForm & {
 };
 
 export type CatalogItem = {
-	exporter_form: DynamicForm;
+	exporter_form: IDynamicForm;
 	fields: CatalogDynamicField[];
 	alert_rules: {
 		alert_name: string; // Text Input - free text
